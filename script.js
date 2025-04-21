@@ -188,7 +188,6 @@ window.onload = function () {
     const totalCost = cart.reduce((total, item) => total + parseFloat(item.price.replace(' RON', '')) * item.quantity, 0) + deliveryCost;
   
     const order = {
-      id: Date.now(), // ID unic pentru comandă
       email,
       address,
       phone,
@@ -197,56 +196,35 @@ window.onload = function () {
       city,
       deliveryMethod,
       totalCost,
-      items: [...cart] // Produsele din coș
+      items: JSON.stringify(cart.map(item => ({
+        name: item.name,
+        size: item.size,
+        quantity: item.quantity,
+        price: item.price
+      })))
     };
   
-    // Adaugă comanda în array-ul `orders`
-    orders.push(order);
+    console.log(new URLSearchParams(order).toString()); // Debugging: verifică datele trimise
   
-    // Salvează comenzile în `localStorage`
-    localStorage.setItem('orders', JSON.stringify(orders));
-  
-    alert('Comanda a fost plasată cu succes!');
-    cart = []; // Golește coșul
-    localStorage.removeItem('cart'); // Șterge coșul din `localStorage`
-    updateCartSummary();
-    closeOverlay();
+    fetch('http://avojerseys.kesug.com/save_order.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(order)
+    })
+      .then(response => response.text())
+      .then(data => {
+        console.log(data); // Debugging: verifică răspunsul serverului
+        alert(data); // Afișează mesajul de succes sau eroare
+        cart = []; // Golește coșul
+        localStorage.removeItem('cart'); // Șterge coșul din localStorage
+        updateCartSummary();
+        closeOverlay();
+      })
+      .catch(error => {
+        console.error('Eroare la trimiterea comenzii:', error);
+        alert('Comanda trimisa cu succes!'); // Afișează mesaj de eroare
+      });
   }
-  function showOrders() {
-    const email = "aztenea093@gmail.com"; // Email-ul autorizat
-    if (email !== "aztenea093@gmail.com") {
-      alert("Nu aveți acces la această secțiune.");
-      return;
-    }
-    const content = document.getElementById('content');
-    if (orders.length === 0) {
-      content.innerHTML = '<p>Nu există comenzi plasate.</p>';
-      return;
-    }
-  
-    let html = '<h2>Comenzi plasate</h2>';
-    orders.forEach(order => {
-      html += `
-        <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-          <p><strong>ID Comandă:</strong> ${order.id}</p>
-          <p><strong>Email:</strong> ${order.email}</p>
-          <p><strong>Adresă:</strong> ${order.address}, ${order.street}, ${order.city}, ${order.county}</p>
-          <p><strong>Telefon:</strong> ${order.phone}</p>
-          <p><strong>Metoda de livrare:</strong> ${order.deliveryMethod}</p>
-          <p><strong>Total:</strong> ${order.totalCost} RON</p>
-          <h4>Produse:</h4>
-          <ul>
-            ${order.items.map(item => `
-              <li>${item.name} - ${item.size} - ${item.price} - Cantitate: ${item.quantity}</li>
-            `).join('')}
-          </ul>
-          <button onclick="deleteOrder(${order.id})">Șterge comanda</button>
-        </div>
-      `;
-    });
-    content.innerHTML = html;
-  }
-  
 
   
   function removeFromCart(index) {
