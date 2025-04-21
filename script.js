@@ -1,18 +1,27 @@
 let products = [
-    { id: 1, name: 'Tricou Real Madrid', price: '150 RON', image: 'images/rma.png', sizes: ['M', 'L', 'XL'] },
-    { id: 2, name: 'Tricou FC Barcelona', price: '140 RON', image: 'images/barca.png', sizes: ['M', 'L', 'XL'] },
-    { id: 3, name: 'Tricou PSG', price: '145 RON', image: 'images/psg.png', sizes: ['M', 'L', 'XL'] },
-    { id: 4, name: 'Tricou Man. City', price: '135 RON', image: 'images/city.png', sizes: ['M', 'L', 'XL'] },
-    { id: 5, name: 'Tricou Juventus', price: '130 RON', image: 'images/juve.png', sizes: [ 'L', 'XL'] },
-    { id: 6, name: 'Tricou AC Milan', price: '160 RON', image: 'images/milan.png', sizes: [ 'L', 'XL'] },
-    { id: 7, name: 'Tricou Portugalia', price: '150 RON', image: 'images/portugalia.png', sizes: [ 'M', 'L', 'XL'] },
-    { id: 8, name: 'Tricou Argentina', price: '150 RON', image: 'images/argentina.png', sizes: [ 'L', 'XL'] },
-    { id: 9, name: 'Tricou Inter Miami', price: '170 RON', image: 'images/messi.png', sizes: [ 'L', 'XL'] },
-    { id: 10, name: 'Tricou AL Nassr', price: '165 RON', image: 'images/ronaldo.png', sizes: [ 'L', 'XL'] },
-    { id: 11, name: 'Tricou Romania 1st Kit', price: '160 RON', image: 'images/romania1.png', sizes: [ 'L', 'XL'] },
-    { id: 12, name: 'Tricou Romania 2nd Kit', price: '160 RON', image: 'images/romania2.png', sizes: [ 'L', 'XL'] },
+    { id: 1, name: 'Tricou Real Madrid Home', price: '150 RON', image: 'images/rma.png', sizes: ['XL'], description: 'Tricou oficial Real Madrid Home KIT sezon 24/25 1:1 ', specifications: 'Material: 100% poliester, Culoare: alb, 15UCL Patch, HP Patch' },
+    { id: 2, name: 'Tricou FC Barcelona Home', price: '140 RON', image: 'images/barca.png', sizes: ['XL'], description: 'Tricou oficial FC Barcelona Home KIT sezon 24/25 1:1', specifications: 'Material: 100% poliester, Culoare: albastru-rosu, 5UCL Patch, Lamine Yamal 19 ' },
+    { id: 3, name: 'Tricou Real Madrid Away', price: '150 RON', image: 'images/rma2.png', sizes: [ 'XL'], description: 'Tricou oficial Real Madrid Away KIT sezon 24/25 1:1', specifications: 'Material: 100% poliester, Culoare: portocaliu, 15UCL Patch, HP Patch' },
+    { id: 4, name: 'Tricou FC Barcelona Away', price: '140 RON', image: 'images/barca2.png', sizes: [ 'XL'], description: 'Tricou oficial FC Barcelona Away KIT sezon 24/25 1:1', specifications: 'Material: 100% poliester, Culoare: negru, 5UCL Patch, Lamine Yamal 19' },
+    { id: 5, name: 'Tricou Chelsea', price: '150 RON', image: 'images/chelsea.png', sizes: [ 'XL'], description: 'Tricou oficial Chelsea KIT sezon 24/25 1:1', specifications: 'Material: 100% poliester, Culoare: albastru, Cole Palmer 20' },
+    { id: 6, name: 'Tricou Portugalia', price: '170 RON', image: 'images/portugalia.png', sizes: ['XL'], description: 'Tricou oficial Portugalia KIT sezon 24/25 1:1', specifications: 'Material: 100% poliester, Culoare: rosu, Cristiano Ronaldo 7' },
+    { id: 7, name: 'Tricou Inter Miami', price: '170 RON', image: 'images/messi.png', sizes: ['XL'], description: 'Tricou oficial Inter Miami KIT sezon 24/25 1:1', specifications: 'Material: 100% poliester, Culoare: roz, Lionel Messi 10' },
   ];
   
+// Încarcă coșul și comenzile din localStorage la încărcarea paginii
+window.onload = function () {
+  const savedCart = localStorage.getItem('cart');
+  if (savedCart) {
+    cart = JSON.parse(savedCart);
+    updateCartSummary(); // Actualizează sumarul coșului
+  }
+
+  const savedOrders = localStorage.getItem('orders');
+  if (savedOrders) {
+    orders = JSON.parse(savedOrders);
+  }
+};
+
   let cart = [];
   let reviews = [];
   let orders = [];
@@ -73,7 +82,15 @@ let products = [
           <img src="${product.image}" alt="${product.name}" style="max-width: 100%; border-radius: 10px;">
           <h2>${product.name}</h2>
           <p>${product.price}</p>
-          <p style="color: green; font-weight: bold;">✔️ În stoc suficient</p>
+          <h2>Descriere</h2>
+          <p>${product.description}</p> <!-- Afișează descrierea produsului -->
+          <h3>Specificații:</h3>
+          <ul>
+            ${product.specifications
+              .split(', ') // Împarte specificațiile după virgulă
+              .map(spec => `<li>${spec}</li>`) // Creează o listă ordonată
+              .join('')}
+          </ul>
           <label for="size">Alege mărimea:</label>
           <select id="size">
             ${product.sizes.map(size => `<option value="${size}">${size}</option>`).join('')}
@@ -82,13 +99,14 @@ let products = [
         </div>
   
         <!-- Secțiunea "Clienți au mai comandat" -->
-        <div class="recommended-products" style="flex: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
-          <h3>Clienți au mai comandat</h3>
+        <div class="recommended-products" style="flex: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px;">
+          <h3 style="text-align: center;">Clienți au mai comandat</h3>
           ${recommendedProducts.map(p => `
-            <div class="recommended-product" style="text-align: center;">
-              <img src="${p.image}" alt="${p.name}" style="width: 100%; border-radius: 5px;">
-              <p style="font-size: 14px;">${p.name}</p>
-              <p style="font-size: 14px; font-weight: bold;">${p.price}</p>
+            <div class="recommended-product" style="text-align: center; border: 1px solid #ddd; border-radius: 10px; padding: 10px; background-color: #fff;">
+              <img src="${p.image}" alt="${p.name}" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+              <p style="font-size: 14px; font-weight: bold; margin: 5px 0;">${p.name}</p>
+              <p style="font-size: 14px; color: #555;">${p.price}</p>
+              <button onclick="viewProduct(${p.id})" style="padding: 5px 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Vezi detalii</button>
             </div>
           `).join('')}
         </div>
@@ -109,28 +127,50 @@ let products = [
   
   function openCart() {
     const content = document.getElementById('content');
+  
     if (cart.length === 0) {
       content.innerHTML = '<h2>Coșul este gol!</h2>';
       return;
     }
-    let html = '<h2>Coș de cumpărături</h2>';
+  
+    let totalItems = 0;
+    let totalCost = 0;
+  
+    // Calculează numărul total de produse și costul total
+    cart.forEach(item => {
+      totalItems += item.quantity;
+      totalCost += parseFloat(item.price.replace(' RON', '')) * item.quantity;
+    });
+  
+    let html = `
+      <h2>Coș de cumpărături</h2>
+      <p><strong>Număr total de produse:</strong> ${totalItems}</p>
+      <p><strong>Cost total:</strong> ${totalCost.toFixed(2)} RON</p>
+      <div class="cart-items">
+    `;
+  
+    // Afișează fiecare produs din coș
     cart.forEach((item, index) => {
       html += `
         <div class="cart-item" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
           <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; border-radius: 5px;">
-          <p>${item.name} - ${item.size} - ${item.price}</p>
+          <p>${item.name} - ${item.size} - ${item.price} x ${item.quantity}</p>
           <button onclick="removeFromCart(${index})" style="background: none; border: none; color: red; font-size: 20px; cursor: pointer;">X</button>
         </div>
       `;
     });
-    html += `<button onclick="openCheckoutOverlay()" style="margin-top: 20px;">Checkout</button>`;
+  
+    html += `
+      </div>
+      <button onclick="openCheckoutOverlay()" style="margin-top: 20px; padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Checkout</button>
+    `;
+  
     content.innerHTML = html;
   }
   
   
   
   function submitOrder() {
-    console.log('Funcția submitOrder a fost apelată!', JSON.stringify(order));
     const email = document.getElementById('email').value;
     const address = document.getElementById('address').value;
     const phone = document.getElementById('phone').value;
@@ -148,7 +188,7 @@ let products = [
     const totalCost = cart.reduce((total, item) => total + parseFloat(item.price.replace(' RON', '')) * item.quantity, 0) + deliveryCost;
   
     const order = {
-      id: orderNumber++, // ID-ul comenzii
+      id: Date.now(), // ID unic pentru comandă
       email,
       address,
       phone,
@@ -159,35 +199,18 @@ let products = [
       totalCost,
       items: [...cart] // Produsele din coș
     };
-  }
-  function showOrders() {
-    const email = prompt("Introduceți emailul pentru acces:");
-    if (email !== "aztenea093@gmail.com") {
-      alert("Nu aveți acces la această secțiune.");
-      return;
-    }
   
-    const content = document.getElementById('content');
-    let html = '<h2>Comenzi plasate</h2>';
-    orders.forEach(order => {
-      html += `
-        <div class="order-item">
-          <h3>Comanda #${order.id}</h3>
-          <p>Email: ${order.email}</p>
-          <p>Adresa: ${order.address}</p>
-          <p>Telefon: ${order.phone}</p>
-          <p>Județ: ${order.county}</p>
-          <p>Strada: ${order.street}</p>
-          <p>Oraș/Sat: ${order.city}</p>
-          <p>Metoda de livrare: ${order.deliveryMethod}</p>
-          <p>Total: ${order.totalCost} RON</p>
-          <ul>
-            ${order.items.map(item => `<li>${item.name} - ${item.size} - ${item.price}</li>`).join('')}
-          </ul>
-        </div>
-      `;
-    });
-    content.innerHTML = html;
+    // Adaugă comanda în array-ul `orders`
+    orders.push(order);
+  
+    // Salvează comenzile în `localStorage`
+    localStorage.setItem('orders', JSON.stringify(orders));
+  
+    alert('Comanda a fost plasată cu succes!');
+    cart = []; // Golește coșul
+    localStorage.removeItem('cart'); // Șterge coșul din `localStorage`
+    updateCartSummary();
+    closeOverlay();
   }
   function showOrders() {
     const email = "aztenea093@gmail.com"; // Email-ul autorizat
@@ -195,50 +218,36 @@ let products = [
       alert("Nu aveți acces la această secțiune.");
       return;
     }
-  
     const content = document.getElementById('content');
+    if (orders.length === 0) {
+      content.innerHTML = '<p>Nu există comenzi plasate.</p>';
+      return;
+    }
+  
     let html = '<h2>Comenzi plasate</h2>';
     orders.forEach(order => {
       html += `
-        <div class="order-item">
-        <h3>Comanda #${order.id}</h3>
-        <p><strong>Email:</strong> ${order.email}</p>
-        <p><strong>Adresă:</strong> ${order.address}, ${order.street}, ${order.city}, ${order.county}</p>
-        <p><strong>Telefon:</strong> ${order.phone}</p>
-        <p><strong>Metoda de livrare:</strong> ${order.deliveryMethod}</p>
-        <p><strong>Total:</strong> ${order.totalCost} RON</p>
-        <h4>Produse:</h4>
-        <ul>
-          ${order.items.map(item => `
-            <li>
-              <strong>${item.name}</strong> - ${item.size} - ${item.price} - Cantitate: ${item.quantity}
-            </li>
-          `).join('')}
-        </ul>
-      </div>
+        <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+          <p><strong>ID Comandă:</strong> ${order.id}</p>
+          <p><strong>Email:</strong> ${order.email}</p>
+          <p><strong>Adresă:</strong> ${order.address}, ${order.street}, ${order.city}, ${order.county}</p>
+          <p><strong>Telefon:</strong> ${order.phone}</p>
+          <p><strong>Metoda de livrare:</strong> ${order.deliveryMethod}</p>
+          <p><strong>Total:</strong> ${order.totalCost} RON</p>
+          <h4>Produse:</h4>
+          <ul>
+            ${order.items.map(item => `
+              <li>${item.name} - ${item.size} - ${item.price} - Cantitate: ${item.quantity}</li>
+            `).join('')}
+          </ul>
+          <button onclick="deleteOrder(${order.id})">Șterge comanda</button>
+        </div>
       `;
     });
     content.innerHTML = html;
   }
   
-  function viewProduct(id) {
-    const product = products.find(p => p.id === id);
-    const content = document.getElementById('content');
-    content.innerHTML = `
-      <div class="product-details">
-        <img src="${product.image}" alt="${product.name}" style="max-width: 100%; border-radius: 10px;">
-        <h2>${product.name}</h2>
-        <p>${product.price}</p>
-        <p>${product.description}</p>
-        <p>${product.specifications}</p>
-        <label for="size">Alege marimea:</label>
-        <select id="size">
-          ${product.sizes.map(size => `<option value="${size}">${size}</option>`).join('')}
-        </select>
-        <button onclick="addToCart(${product.id})">Adaugă în coș</button>
-      </div>
-    `;
-  }
+
   
   function removeFromCart(index) {
     cart.splice(index, 1);
@@ -315,54 +324,11 @@ let products = [
     }
   }
   
-  function showOrders() {
-    const content = document.getElementById('content');
-    let html = '<h2>Comenzi plasate</h2>';
-    orders.forEach(order => {
-      html += `
-        <div class="order-item">
-        <h3>Comanda #${order.id}</h3>
-        <p><strong>Email:</strong> ${order.email}</p>
-        <p><strong>Adresă:</strong> ${order.address}, ${order.street}, ${order.city}, ${order.county}</p>
-        <p><strong>Telefon:</strong> ${order.phone}</p>
-        <p><strong>Metoda de livrare:</strong> ${order.deliveryMethod}</p>
-        <p><strong>Total:</strong> ${order.totalCost} RON</p>
-        <h4>Produse:</h4>
-        <ul>
-          ${order.items.map(item => `
-            <li>
-              <strong>${item.name}</strong> - ${item.size} - ${item.price} - Cantitate: ${item.quantity}
-            </li>
-          `).join('')}
-        </ul>
-      </div>
-      `;
-    });
-    content.innerHTML = html;
-  }
-  
-  // Initialize homepage
-  navigateTo('homepage');
 
-  function openCart() {
-    const content = document.getElementById('content');
-    if (cart.length === 0) {
-      content.innerHTML = '<h2>Coșul este gol!</h2>';
-      return;
-    }
-    let html = '<h2>Coș de cumpărături</h2>';
-    cart.forEach((item, index) => {
-      html += `
-        <div class="cart-item">
-          <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; border-radius: 5px;">
-          <p>${item.name} - ${item.size} - ${item.price}</p>
-          <button onclick="removeFromCart(${index})">Șterge</button>
-        </div>
-      `;
-    });
-    html += `<button onclick="openCheckoutOverlay()">Checkout</button>`;
-    content.innerHTML = html;
-  }
+  
+
+
+
   
   function openCheckoutOverlay() {
     const overlay = document.getElementById('order-overlay');
@@ -383,38 +349,7 @@ let products = [
     overlay.style.display = 'flex';
   }
   
-  function submitOrder() {
-    const address = document.getElementById('address').value;
-    const phone = document.getElementById('phone').value;
-    const county = document.getElementById('county').value;
-    const street = document.getElementById('street').value;
-    const city = document.getElementById('city').value;
-    const deliveryMethod = document.getElementById('delivery-method').value;
-  
-    if (!address || !phone || !county || !street || !city) {
-      alert('Te rugăm să completezi toate câmpurile!');
-      return;
-    }
-  
-    const deliveryCost = deliveryMethod === 'fan' ? 20 : 10;
-    const totalCost = cart.reduce((total, item) => total + parseFloat(item.price.replace(' RON', '')), 0) + deliveryCost;
-  
-    orders.push({
-      id: orderNumber++,
-      items: [...cart],
-      address,
-      phone,
-      county,
-      street,
-      city,
-      deliveryMethod,
-      totalCost,
-    });
-  
-    cart = [];
-    closeOverlay();
-    alert('Comanda a fost plasată cu succes!');
-  }
+
   
   function toggleFAQ(button) {
     const faqItem = button.parentElement;
@@ -530,13 +465,6 @@ let products = [
     content.innerHTML = html;
   }
 
-
-
-  
-
-
-
-
   function addToCart(id) {
     const product = products.find(p => p.id === id);
     const size = document.getElementById('size').value;
@@ -556,137 +484,14 @@ let products = [
     button.disabled = true;
   }
   
-  function openCart() {
-    const content = document.getElementById('content');
-    if (cart.length === 0) {
-      content.innerHTML = '<h2>Coșul este gol!</h2>';
-      return;
-    }
-    let html = '<h2>Coș de cumpărături</h2>';
-    cart.forEach((item, index) => {
-      html += `
-        <div class="cart-item" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-          <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; border-radius: 5px;">
-          <div>
-            <p>${item.name} - ${item.size}</p>
-            <p>X${item.quantity}</p>
-          </div>
-          <button onclick="removeFromCart(${index})" style="background: none; border: none; color: red; font-size: 20px; cursor: pointer;">X</button>
-        </div>
-      `;
-    });
-    html += `<button onclick="openCheckoutOverlay()" style="margin-top: 20px;">Checkout</button>`;
-    content.innerHTML = html;
-  }
   
-  function viewProduct(id) {
-    const product = products.find(p => p.id === id);
-    const recommendedProducts = products.filter(p => p.id !== id); // Produse recomandate (toate, mai puțin cel curent)
-  
-    const content = document.getElementById('content');
-    content.innerHTML = `
-      <div style="display: flex; gap: 20px;">
-        <!-- Secțiunea produsului -->
-        <div class="product-details" style="flex: 2;">
-          <img src="${product.image}" alt="${product.name}" style="max-width: 100%; border-radius: 10px;">
-          <h2>${product.name}</h2>
-          <p>${product.price}</p>
-          <p style="color: green; font-weight: bold;">✔️ În stoc suficient</p>
-          <label for="size">Alege mărimea:</label>
-          <select id="size">
-            ${product.sizes.map(size => `<option value="${size}">${size}</option>`).join('')}
-          </select>
-          <button onclick="addToCart(${product.id})">Adaugă în coș</button>
-        </div>
-  
-        <!-- Secțiunea "Clienți au mai comandat" -->
-        <div class="recommended-products" style="flex: 1;">
-          <h3>Clienți au mai comandat</h3>
-          ${recommendedProducts.map(p => `
-            <div class="recommended-product" style="margin-bottom: 15px;">
-              <img src="${p.image}" alt="${p.name}" style="width: 100%; border-radius: 5px;">
-              <p>${p.name}</p>
-              <p>${p.price}</p>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
-  }
-
-  function submitOrder() {
-    const email = document.getElementById('email').value;
-    const address = document.getElementById('address').value;
-    const phone = document.getElementById('phone').value;
-    const county = document.getElementById('county').value;
-    const street = document.getElementById('street').value;
-    const city = document.getElementById('city').value;
-    const deliveryMethod = document.getElementById('delivery-method').value;
-  
-    if (!email || !address || !phone || !county || !street || !city) {
-      alert('Te rugăm să completezi toate câmpurile!');
-      return;
-    }
-  
-    const deliveryCost = deliveryMethod === 'fan' ? 20 : 10;
-    const totalCost = cart.reduce((total, item) => total + parseFloat(item.price.replace(' RON', '')), 0) + deliveryCost;
-  
-    orders.push({
-      id: orderNumber++,
-      email,
-      address,
-      phone,
-      county,
-      street,
-      city,
-      deliveryMethod,
-      totalCost,
-      items: [...cart],
-    });
-  
-    cart = [];
-    closeOverlay();
-    alert('Comanda a fost plasată cu succes!');
-  }
   
   function closeOverlay() {
     const overlay = document.getElementById('order-overlay');
     overlay.style.display = 'none';
   }
   
-  function viewProduct(id) {
-    const product = products.find(p => p.id === id);
-    const recommendedProducts = products.filter(p => p.id !== id); // Produse recomandate
-  
-    const content = document.getElementById('content');
-    content.innerHTML = `
-      <div style="display: flex; gap: 20px;">
-        <!-- Secțiunea produsului -->
-        <div class="product-details" style="flex: 2;">
-          <img src="${product.image}" alt="${product.name}" style="max-width: 100%; border-radius: 10px;">
-          <h2>${product.name}</h2>
-          <p>${product.price}</p>
-          <p style="color: green; font-weight: bold;">✔️ În stoc suficient</p>
-          <label for="size">Alege mărimea:</label>
-          <select id="size">
-            ${product.sizes.map(size => `<option value="${size}">${size}</option>`).join('')}
-          </select>
-          <button onclick="addToCart(${product.id})">Adaugă în coș</button>
-        </div>
-  
-        <!-- Secțiunea "Clienți au mai comandat" -->
-        <div class="recommended-products" style="flex: 1; overflow-y: hidden; overflow-x: auto; white-space: nowrap;">
-          <h3>Clienți au mai comandat</h3>
-          ${recommendedProducts.map(p => `
-            <div class="recommended-product" style="display: inline-block; margin-right: 10px; width: 100px;">
-              <img src="${p.image}" alt="${p.name}" style="width: 100%; border-radius: 5px;">
-              <p style="font-size: 12px; text-align: center;">${p.name}</p>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
-  }
+
   function showMessage() {
     const messageElement = document.getElementById('message');
     messageElement.style.display = 'block';
@@ -751,39 +556,16 @@ function updateOrderSummary(totalCost, discountAmount) {
   summary.innerHTML = html;
 }
 
-function submitOrder() {
-  const email = document.getElementById('email').value;
-  const address = document.getElementById('address').value;
-  const phone = document.getElementById('phone').value;
-  const county = document.getElementById('county').value;
-  const street = document.getElementById('street').value;
-  const city = document.getElementById('city').value;
-  const deliveryMethod = document.getElementById('delivery-method').value;
 
-  if (!email || !address || !phone || !county || !street || !city) {
-    alert('Te rugăm să completezi toate câmpurile!');
-    return;
+
+function deleteOrder(orderId) {
+  const email = prompt('Introduceți emailul pentru a confirma ștergerea comenzii:');
+  if (email === 'aztenea093@gmail.com') {
+    orders = orders.filter(order => order.id !== orderId);
+    localStorage.setItem('orders', JSON.stringify(orders));
+    alert('Comanda a fost ștearsă cu succes!');
+    showOrders();
+  } else {
+    alert('Nu aveți permisiunea de a șterge această comandă.');
   }
-
-  const deliveryCost = deliveryMethod === 'fan' ? 20 : 10;
-  const totalCost = cart.reduce((total, item) => total + parseFloat(item.price.replace(' RON', '')) * item.quantity, 0) + deliveryCost;
-
-  // Salvează comanda în array-ul `orders`
-  orders.push({
-    id: orderNumber++,
-    email,
-    address,
-    phone,
-    county,
-    street,
-    city,
-    deliveryMethod,
-    totalCost,
-    items: [...cart], // Copiază produsele din coș
-  });
-
-  // Resetează coșul
-  cart = [];
-  closeOverlay();
-  alert('Comanda a fost plasată cu succes!');
 }

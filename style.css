@@ -509,3 +509,47 @@ button {
 button:hover {
   background-color: #007acc;
 }
+
+/* Stil pentru select (dropdown) */
+#size {
+  font-size: 18px;
+  padding: 10px;
+  border: 2px solid #007bff;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  color: #333;
+  width: 150px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+/* Stil pentru buton */
+button.add-to-cart {
+  font-size: 18px;
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button.add-to-cart:hover {
+  background-color: #0056b3;
+}
+
+
+.social-media h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.social-media a img {
+  transition: transform 0.3s ease;
+}
+
+.social-media a img:hover {
+  transform: scale(1.2); /* Mărește iconițele la hover */
+}
