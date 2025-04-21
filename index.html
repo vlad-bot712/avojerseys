@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Magazin Tricouri Fotbal</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="left">
+      <button onclick="navigateTo('homepage')">Acasa</button>
+      <button onclick="navigateTo('tricouri')">Tricouri</button>
+      <button onclick="navigateTo('orders')">Comenzi</button>
+      <a href="discount.html">Discount</a>
+    </div>
+    <div class="center">
+      <img src="images/avo.jpg" alt="Logo" class="logo">
+    </div>
+    <div class="right">
+      <input type="text" placeholder="Cauta..." oninput="searchProduct(this.value)">
+      <img src="images/search.png" alt="Search" class="icon search-icon">
+      <img src="images/shopping-cart.png" alt="Cos" class="icon cart-icon" onclick="openCart()">
+    </div>
+  </header>
+
+
+
+  <div id="order-overlay" class="overlay" style="display: none;">
+    <div class="overlay-content">
+      <h2>Plasează comanda</h2>
+      <form id="order-form">
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Introdu emailul" required>
+        <label for="address">Adresa:</label>
+        <input type="text" id="address" placeholder="Introdu adresa" required>
+        <label for="phone">Număr de telefon:</label>
+        <input type="text" id="phone" placeholder="Introdu numărul de telefon" required>
+        <label for="county">Județ:</label>
+        <input type="text" id="county" placeholder="Introdu județul" required>
+        <label for="street">Strada:</label>
+        <input type="text" id="street" placeholder="Introdu strada" required>
+        <label for="city">Oraș/Sat:</label>
+        <input type="text" id="city" placeholder="Introdu orașul sau satul" required>
+        <label for="delivery-method">Metoda de livrare:</label>
+        <select id="delivery-method">
+          <option value="fan">Fan Courier</option>
+        </select>
+  
+        <!-- Cod de reducere -->
+        <label for="discount-code">Cod de reducere:</label>
+        <input type="text" id="discount-code" placeholder="Introdu codul de reducere">
+        <button type="button" onclick="applyDiscount()">Aplică reducerea</button>
+  
+        <div id="order-summary"></div>
+        <button type="button" onclick="submitOrder()">Trimite comanda</button>
+        <button type="button" onclick="closeOverlay()">Anulează</button>
+      </form>
+    </div>
+  </div>
+
+
+
+
+  <!-- Content -->
+  <main id="content" class="section"></main>
+
+
+  <!-- Footer -->
+  <footer class="footer" id="footer">
+    <p>&copy; 2025 Magazin Tricouri Fotbal</p>
+    <p>Contact: <a href="mailto:contact@tricourifotbal.ro">contact@tricourifotbal.ro</a></p>
+    <p>Telefon: +40 123 456 789</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

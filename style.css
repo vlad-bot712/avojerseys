@@ -1,0 +1,511 @@
+/* General Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+button {
+  font-family: 'Poppins', sans-serif;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #111;
+  color: white;
+  padding: 10px 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .left button {
+  background: none;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0 10px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.navbar .left button:hover {
+  color: #00d4ff;
+}
+
+.navbar .center .logo {
+  height: 40px;
+}
+
+.navbar .right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar .right input {
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.navbar .right .icon {
+  height: 24px;
+  width: 24px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.navbar .right .icon:hover {
+  transform: scale(1.1);
+}
+
+/* Section */
+.section {
+  padding: 20px;
+  text-align: center;
+}
+
+/* Products */
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  justify-items: center;
+}
+
+.product {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.product h3 {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.product p {
+  font-size: 14px;
+  color: #555;
+}
+
+.product button {
+  background: #00d4ff;
+  color: white;
+  font-weight: bold;
+}
+
+.product button:hover {
+  background: #007acc;
+}
+
+.product:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer */
+.footer {
+  background: #111;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: 255px;
+}
+
+.footer a {
+  color: #00d4ff;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar .right {
+    margin-top: 10px;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .products {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow-y: auto; /* Permite scroll */
+  padding: 20px; /* Adaugă spațiu pentru scroll */
+}
+
+.overlay-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  text-align: left; /* Aliniere la stânga pentru câmpuri */
+  overflow-y: auto; /* Scroll intern */
+  max-height: 90vh; /* Limitează înălțimea la 90% din viewport */
+}
+
+.overlay-content form {
+  display: flex;
+  flex-direction: column; /* Afișează câmpurile unul sub altul */
+  gap: 15px; /* Spațiu între câmpuri */
+}
+
+.overlay-content input,
+.overlay-content select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  width: 100%; /* Lățime completă */
+}
+
+.overlay-content button {
+  background: #00d4ff;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.overlay-content button:hover {
+  background: #007acc;
+}
+
+
+
+/* Cart Items */
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cart-item-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+}
+
+.cart-item-details {
+  flex: 1;
+  margin-left: 15px;
+  text-align: left;
+}
+
+.cart-item-remove {
+  background: none;
+  border: none;
+  color: red;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.cart-item-remove:hover {
+  color: darkred;
+}
+
+.checkout-button {
+  margin-top: 20px;
+  background: #00d4ff;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.checkout-button:hover {
+  background: #007acc;
+}
+
+
+
+
+/* Product Details */
+.product-details {
+  text-align: left;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-details img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.product-details button {
+  background: #00d4ff;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.product-details button:hover {
+  background: #007acc;
+}
+
+/* Recommended Products */
+.recommended-products {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Două produse pe rând */
+  gap: 10px; /* Spațiu între produse */
+}
+
+.recommended-product {
+  display: inline-block;
+  margin-right: 10px;
+  width: 100px;
+}
+
+.recommended-product img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.recommended-product p {
+  margin: 5px 0;
+  font-size: 14px;
+  text-align: center;
+
+}
+
+/* General Product Design */
+.product {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.product h3 {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.product p {
+  font-size: 14px;
+  color: #555;
+}
+
+.product button {
+  background: #00d4ff;
+  color: white;
+  font-weight: bold;
+}
+
+.product button:hover {
+  background: #007acc;
+}
+
+.product:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+
+.order-item {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.order-item h3 {
+  margin-bottom: 10px;
+  color: #007acc;
+}
+
+.order-item p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.order-item ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+
+.order-item ul li {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.order-item h4 {
+  margin-top: 15px;
+  font-size: 16px;
+  color: #007acc;
+}
+
+
+label[for="size"] {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+}
+
+
+
+
+#discount-container {
+  text-align: center;
+  margin-top: 100px;
+}
+
+#discount-button {
+  background-color: #00d4ff;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#discount-button:hover {
+  background-color: #007acc;
+  transform: scale(1.05);
+}
+
+#discount-button:active {
+  background-color: #005f99;
+  transform: scale(0.95);
+}
+
+#home-button {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 18px;
+  color: #007acc;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+#home-button:hover {
+  color: #005f99;
+  text-decoration: underline;
+}
+
+#message {
+  margin-top: 20px;
+  font-size: 24px;
+  color: green;
+  font-weight: bold;
+}
+
+
+#order-summary {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+#order-summary p {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+button {
+  background-color: #00d4ff;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #007acc;
+}
