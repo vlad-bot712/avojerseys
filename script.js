@@ -171,6 +171,7 @@ window.onload = function () {
   
   
   function submitOrder() {
+    // Preia valorile din câmpurile formularului
     const email = document.getElementById('email').value;
     const address = document.getElementById('address').value;
     const phone = document.getElementById('phone').value;
@@ -178,54 +179,57 @@ window.onload = function () {
     const street = document.getElementById('street').value;
     const city = document.getElementById('city').value;
     const deliveryMethod = document.getElementById('delivery-method').value;
-  
+
+    // Verifică dacă toate câmpurile sunt completate
     if (!email || !address || !phone || !county || !street || !city) {
-      alert('Te rugăm să completezi toate câmpurile!');
-      return;
+        alert('Te rugăm să completezi toate câmpurile!');
+        return;
     }
-  
+
+    // Calculează costurile
     const deliveryCost = deliveryMethod === 'fan' ? 20 : 10;
     const totalCost = cart.reduce((total, item) => total + parseFloat(item.price.replace(' RON', '')) * item.quantity, 0) + deliveryCost;
-  
-    const order = {
-      email,
-      address,
-      phone,
-      county,
-      street,
-      city,
-      deliveryMethod,
-      totalCost,
-      items: JSON.stringify(cart.map(item => ({
-        name: item.name,
-        size: item.size,
-        quantity: item.quantity,
-        price: item.price
-      })))
-    };
-  
-    console.log(new URLSearchParams(order).toString()); // Debugging: verifică datele trimise
-  
-    fetch('http://avojerseys.kesug.com/save_order.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(order)
-    })
-      .then(response => response.text())
-      .then(data => {
-        console.log(data); // Debugging: verifică răspunsul serverului
-        alert(data); // Afișează mesajul de succes sau eroare
-        cart = []; // Golește coșul
-        localStorage.removeItem('cart'); // Șterge coșul din localStorage
-        updateCartSummary();
-        closeOverlay();
-      })
-      .catch(error => {
-        console.error('Eroare la trimiterea comenzii:', error);
-        alert('Comanda trimisa cu succes!'); // Afișează mesaj de eroare
-      });
-  }
 
+    // Creează obiectul comenzii
+    const order = {
+        email,
+        address,
+        phone,
+        county,
+        street,
+        city,
+        deliveryMethod,
+        totalCost,
+        items: cart.map(item => ({
+            name: item.name,
+            size: item.size,
+            quantity: item.quantity,
+            price: item.price
+        }))
+    };
+
+    // Trimite cererea către server
+    fetch('http://avojerseys.kesug.com/save_order.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(order)
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message); // Afișează mesajul de succes
+                cart = []; // Golește coșul
+                localStorage.removeItem('cart'); // Șterge coșul din localStorage
+                updateCartSummary(); // Actualizează sumarul coșului
+            } else {
+                alert('Eroare: ' + data.message); // Afișează mesajul de eroare
+            }
+        })
+        .catch(error => {
+            console.error('Eroare la trimiterea comenzii:', error);
+            alert('A apărut o eroare la trimiterea comenzii. Verifică conexiunea la internet.');
+        });
+}
   
   function removeFromCart(index) {
     cart.splice(index, 1);
