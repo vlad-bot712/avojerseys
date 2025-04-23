@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cum să comanzi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f7fa;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        p {
+            text-align: center;
+            color: #555;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        ol {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            counter-reset: step-counter;
+        }
+        ol li {
+            counter-increment: step-counter;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        ol li::before {
+            content: counter(step-counter);
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background: #007bff;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        ol li img {
+            max-width: 120px;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        ol li div {
+            flex: 1;
+        }
+        ol li div h2 {
+            font-size: 18px;
+            color: #333;
+            margin: 0 0 5px;
+        }
+        ol li div p {
+            margin: 0;
+            color: #555;
+            font-size: 14px;
+        }
+        .highlight {
+            background-color: #25D366;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cum să comanzi</h1>
+        <p>Urmează pașii de mai jos pentru a comanda tricoul perfect!</p>
+        <ol>
+            <li>
+                <img src="images/select.png" alt="Selectează tricoul">
+                <div>
+                    <h2>Alege un tricou</h2>
+                    <p>Navighează prin catalogul de produse și alege tricoul dorit. Poți selecta dintr-o varietate de modele și culori.</p>
+                </div>
+            </li>
+            <li>
+                <img src="images/select1.png" alt="Alege mărimea">
+                <div>
+                    <h2>Alege mărimea</h2>
+                    <p>După ce ai selectat un tricou, alege mărimea potrivită pentru tine (S, M, L, XL etc.).</p>
+                </div>
+            </li>
+            <li>
+                <img src="images/addcart.png" alt="Adaugă în coș">
+                <div>
+                    <h2>Adaugă în coș</h2>
+                    <p>Apasă pe butonul „Adaugă în coș” pentru a include produsul în coșul tău de cumpărături.</p>
+                </div>
+            </li>
+            <li>
+                <img src="images/cart.png" alt="Accesează coșul">
+                <div>
+                    <h2>Accesează coșul</h2>
+                    <p>După ce ai adăugat toate produsele dorite, mergi la coșul de cumpărături apăsând pe pictograma coșului din partea de sus a paginii.</p>
+                </div>
+            </li>
+            <li>
+                <img src="images/check.png" alt="Checkout">
+                <div>
+                    <h2>Apasă pe „Checkout”</h2>
+                    <p>În coșul de cumpărături, verifică produsele și apasă pe butonul „Checkout” pentru a continua.</p>
+                </div>
+            </li>
+            <li>
+                <img src="images/checkou.png" alt="Completează datele">
+                <div>
+                    <h2>Completează datele</h2>
+                    <p>Introdu informațiile tale personale, cum ar fi emailul, adresa, telefonul, orașul, strada și județul.</p>
+                </div>
+            </li>
+            <li>
+                <img src="images/finalizare.png" alt="Finalizează comanda">
+                <div>
+                    <h2>Finalizează cu WhatsApp</h2>
+                    <p>Apasă pe butonul <span class="highlight">Finalizează cu WhatsApp</span>. Se va deschide aplicația WhatsApp cu un mesaj pre-completat care conține detaliile comenzii tale. Doar trimite mesajul.</p>
+                </div>
+            </li>
+        </ol>
+        <footer>
+            <p>Mulțumim că ai ales să comanzi de la noi! 😃</p>
+        </footer>
+    </div>
+</body>
+</html>

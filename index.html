@@ -14,6 +14,7 @@
       <button onclick="navigateTo('homepage')">Acasa</button>
       <button onclick="navigateTo('tricouri')">Tricouri</button>
       <button onclick="navigateTo('orders')">Comenzi</button>
+      <a href="how-to-order.html">Cum să comanzi</a>
       <a href="discount.html">Discount</a>
     </div>
     <div class="center" style="text-align: center;">
@@ -44,6 +45,8 @@
         <input type="text" id="street" placeholder="Introdu strada" required>
         <label for="city">Oraș/Sat:</label>
         <input type="text" id="city" placeholder="Introdu orașul sau satul" required>
+        <label for="postal-code">Cod Postal:</label>
+        <input type="text" id="postal-code" placeholder="Introdu codul postal" required>
         <label for="delivery-method">Metoda de livrare:</label>
         <select id="delivery-method">
           <option value="fan">Fan Courier</option>
@@ -53,11 +56,14 @@
         <label for="discount-code">Cod de reducere:</label>
         <input type="text" id="discount-code" placeholder="Introdu codul de reducere">
         <button type="button" onclick="applyDiscount()">Aplică reducerea</button>
-  
         <div id="order-summary"></div>
         <p>Vei primi un e-mail pentru instiintarea confirmarii comenzii cat de repede de catre stafful nostru</p>
         <h1>Nota: E-mailul se poate primi pana la 1-2ore deoarece este un proces manual</h1>
-        <button type="button" onclick="submitOrder()">Trimite comanda</button>
+        <button onclick="submitOrderWithWhatsApp()" style="display: flex; align-items: center; gap: 10px; padding: 10px 20px; background-color: #1a1f1c; color: white; border: none; border-radius: 5px; cursor: pointer;">
+          <img src="images/wsp.png" alt="WhatsApp" style="width: 20px; height: 20px;"> 
+          Finalizează cu WhatsApp
+      </button>
+      </button>
         <button type="button" onclick="closeOverlay()">Anulează</button>
       </form>
     </div>

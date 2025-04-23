@@ -16,6 +16,7 @@ window.onload = function () {
     updateCartSummary(); // Actualizează sumarul coșului
   }
 
+
   const savedOrders = localStorage.getItem('orders');
   if (savedOrders) {
     orders = JSON.parse(savedOrders);
@@ -170,7 +171,7 @@ window.onload = function () {
   
   
   
-  function submitOrder() {
+  function submitOrderWithWhatsApp() {
     // Preia valorile din câmpurile formularului
     const email = document.getElementById('email').value;
     const address = document.getElementById('address').value;
@@ -178,6 +179,7 @@ window.onload = function () {
     const county = document.getElementById('county').value;
     const street = document.getElementById('street').value;
     const city = document.getElementById('city').value;
+    const postalCode = document.getElementById('postal-code').value;
     const deliveryMethod = document.getElementById('delivery-method').value;
 
     // Verifică dacă toate câmpurile sunt completate
@@ -190,46 +192,57 @@ window.onload = function () {
     const deliveryCost = deliveryMethod === 'fan' ? 20 : 10;
     const totalCost = cart.reduce((total, item) => total + parseFloat(item.price.replace(' RON', '')) * item.quantity, 0) + deliveryCost;
 
-    // Creează obiectul comenzii
-    const order = {
-        email,
-        address,
-        phone,
-        county,
-        street,
-        city,
-        deliveryMethod,
-        totalCost,
-        items: cart.map(item => ({
-            name: item.name,
-            size: item.size,
-            quantity: item.quantity,
-            price: item.price
-        }))
-    };
+    // Creează mesajul pentru WhatsApp
+    const message = `
+        Comandă nouă:
+        - Email: ${email}
+        - Telefon: ${phone}
+        - Adresă: ${address}, ${street}, ${city}, ${county}
+        - Metodă livrare: ${deliveryMethod === 'fan' ? 'Fan Courier' : 'Poșta Română'}
+        - Cod postal: ${document.getElementById('postal-code').value}
+        - Cost total: ${totalCost.toFixed(2)} RON
+        - Produse:
+        ${cart.map(item => `   * ${item.quantity} x ${item.name} (${item.size}) - ${item.price}`).join('\n')}
+    `;
 
-    // Trimite cererea către server
-    fetch('http://avojerseys.kesug.com/save_order.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(order)
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert(data.message); // Afișează mesajul de succes
-                cart = []; // Golește coșul
-                localStorage.removeItem('cart'); // Șterge coșul din localStorage
-                updateCartSummary(); // Actualizează sumarul coșului
-            } else {
-                alert('Eroare: ' + data.message); // Afișează mesajul de eroare
-            }
-        })
-        .catch(error => {
-            console.error('Eroare la trimiterea comenzii:', error);
-            alert('A apărut o eroare la trimiterea comenzii. Verifică conexiunea la internet.');
-        });
+    // Numărul tău de telefon (înlocuiește cu numărul tău real)
+    const myPhoneNumber = '40771214794'; // Include codul de țară (ex: +40 pentru România)
+
+    // Creează link-ul WhatsApp
+    const whatsappLink = `https://wa.me/${myPhoneNumber}?text=${encodeURIComponent(message)}`;
+
+    // Deschide WhatsApp
+    window.open(whatsappLink, '_blank');
 }
+  function showOrders() {
+    const email = prompt("Introduceți emailul pentru acces:");
+    if (email !== "aztenea093@gmail.com") {
+      alert("Nu aveți acces la această secțiune.");
+      return;
+    }
+  
+    const content = document.getElementById('content');
+    let html = '<h2>Comenzi plasate</h2>';
+    orders.forEach(order => {
+      html += `
+        <div class="order-item">
+          <h3>Comanda #${order.id}</h3>
+          <p>Email: ${order.email}</p>
+          <p>Adresa: ${order.address}</p>
+          <p>Telefon: ${order.phone}</p>
+          <p>Județ: ${order.county}</p>
+          <p>Strada: ${order.street}</p>
+          <p>Oraș/Sat: ${order.city}</p>
+          <p>Metoda de livrare: ${order.deliveryMethod}</p>
+          <p>Total: ${order.totalCost} RON</p>
+          <ul>
+            ${order.items.map(item => `<li>${item.name} - ${item.size} - ${item.price}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+    });
+    content.innerHTML = html;
+  }
   
   function removeFromCart(index) {
     cart.splice(index, 1);
@@ -551,3 +564,5 @@ function deleteOrder(orderId) {
     alert('Nu aveți permisiunea de a șterge această comandă.');
   }
 }
+
+
