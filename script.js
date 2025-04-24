@@ -1,11 +1,11 @@
 let products = [
-    { id: 1, name: 'Tricou Real Madrid Home', price: '150 RON', image: 'images/rma.png', sizes: ['XL'], description: 'Tricou oficial Real Madrid Home KIT sezon 24/25 1:1 ', specifications: 'Material: 100% poliester, Culoare: alb, 15UCL Patch, HP Patch' },
+    { id: 1, name: 'Tricou Real Madrid Home', price: '150 RON', image: 'images/rma.png' , sizes: ['XL'], description: 'Tricou oficial Real Madrid Home KIT sezon 24/25 1:1 ', specifications: 'Material: 100% poliester, Culoare: alb, 15UCL Patch, HP Patch' },
     { id: 2, name: 'Tricou FC Barcelona Home', price: '140 RON', image: 'images/barca.png', sizes: ['XL'], description: 'Tricou oficial FC Barcelona Home KIT sezon 24/25 1:1', specifications: 'Material: 100% poliester, Culoare: albastru-rosu, 5UCL Patch, Lamine Yamal 19 ' },
     { id: 3, name: 'Tricou Real Madrid Away', price: '150 RON', image: 'images/rma2.png', sizes: [ 'XL'], description: 'Tricou oficial Real Madrid Away KIT sezon 24/25 1:1', specifications: 'Material: 100% poliester, Culoare: portocaliu, 15UCL Patch, HP Patch' },
     { id: 4, name: 'Tricou FC Barcelona Away', price: '140 RON', image: 'images/barca2.png', sizes: [ 'XL'], description: 'Tricou oficial FC Barcelona Away KIT sezon 24/25 1:1', specifications: 'Material: 100% poliester, Culoare: negru, 5UCL Patch, Lamine Yamal 19' },
     { id: 5, name: 'Tricou Chelsea', price: '150 RON', image: 'images/chelsea.png', sizes: [ 'XL'], description: 'Tricou oficial Chelsea KIT sezon 24/25 1:1', specifications: 'Material: 100% poliester, Culoare: albastru, Cole Palmer 20' },
     { id: 6, name: 'Tricou Portugalia', price: '170 RON', image: 'images/portugalia.png', sizes: ['XL'], description: 'Tricou oficial Portugalia KIT sezon 24/25 1:1', specifications: 'Material: 100% poliester, Culoare: rosu, Cristiano Ronaldo 7' },
-    { id: 7, name: 'Tricou Inter Miami', price: '170 RON', image: 'images/messi.png', sizes: ['XL'], description: 'Tricou oficial Inter Miami KIT sezon 24/25 1:1', specifications: 'Material: 100% poliester, Culoare: roz, Lionel Messi 10' },
+    { id: 7, name: 'Tricou Inter Miami', price: '170 RON', image: 'images/messi.png', sizes: ['XL'], description: 'Tricou oficial Inter Miami KIT sezon 24/25 1:1', specifications: 'Material: 100% poliester, Culoare: roz, Lionel Messi 10'  },
   ];
   
 // Încarcă coșul și comenzile din localStorage la încărcarea paginii
@@ -564,5 +564,8 @@ function deleteOrder(orderId) {
     alert('Nu aveți permisiunea de a șterge această comandă.');
   }
 }
+
+
+
 
 
